@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	
+
 	"github.com/marieesss/go-crm-terminal/internal/domain"
 	"github.com/marieesss/go-crm-terminal/internal/handler"
 )
@@ -13,11 +13,11 @@ import (
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
-	contacts := []domain.Contact{
-		{Name: "Alice", Surname: "Smith", Phone: "123-456-7890", Email: "alice@example.com"},
-		{Name: "Bob", Surname: "Johnson", Phone: "987-654-3210", Email: "bob@example.com"},
-		{Name: "Charlie", Surname: "Brown", Phone: "555-555-5555", Email: "charlie@example.com"},
-	}
+	var contacts []domain.Contact
+
+	contacts = append(contacts, domain.Contact{Name: "Alice", Surname: "Smith", Phone: "123-456-7890", Email: "alice@example.com"})
+	contacts = append(contacts, domain.Contact{Name: "Bob", Surname: "Johnson", Phone: "987-654-3210", Email: "bob@example.com"})
+	contacts = append(contacts, domain.Contact{Name: "Charlie", Surname: "Brown", Phone: "555-555-5555", Email: "charlie@example.com"})
 
 	for {
 		fmt.Println("=== MENU ===")
@@ -33,10 +33,12 @@ func main() {
 
 		switch input {
 		case "1":
-			fmt.Print("Nom de l'utilisateur : ")
-			name, _ := reader.ReadString('\n')
-			name = strings.TrimSpace(name)
-			fmt.Println("Utilisateur ajouté :", name)
+			contact, err := handler.AddUser(&contacts)
+			if err != nil {
+				fmt.Println("Erreur lors de l'ajout de l'utilisateur :", err)
+			} else {
+				fmt.Println("Utilisateur ajouté :", contact)
+			}
 		case "2":
 			handler.ListUsers(contacts)
 		case "3":
