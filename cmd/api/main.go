@@ -40,7 +40,7 @@ func main() {
 				fmt.Println("Utilisateur ajouté :", contact)
 			}
 		case "2":
-			handler.ListUsers(contacts)
+			handler.ListUsers(&contacts)
 		case "3":
 			fmt.Println("Utilisateur supprimé")
 		case "4":
