@@ -5,19 +5,15 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	
+	"github.com/marieesss/go-crm-terminal/internal/domain"
+	"github.com/marieesss/go-crm-terminal/internal/handler"
 )
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
-	type Contact struct {
-		Name    string
-		Surname string
-		Phone   string
-		Email   string
-	}
-
-	contacts := []Contact{
+	contacts := []domain.Contact{
 		{Name: "Alice", Surname: "Smith", Phone: "123-456-7890", Email: "alice@example.com"},
 		{Name: "Bob", Surname: "Johnson", Phone: "987-654-3210", Email: "bob@example.com"},
 		{Name: "Charlie", Surname: "Brown", Phone: "555-555-5555", Email: "charlie@example.com"},
@@ -42,7 +38,7 @@ func main() {
 			name = strings.TrimSpace(name)
 			fmt.Println("Utilisateur ajouté :", name)
 		case "2":
-			fmt.Println("Liste des utilisateurs")
+			handler.ListUsers(contacts)
 		case "3":
 			fmt.Println("Utilisateur supprimé")
 		case "4":
