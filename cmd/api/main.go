@@ -42,7 +42,12 @@ func main() {
 		case "2":
 			handler.ListUsers(&contacts)
 		case "3":
-			fmt.Println("Utilisateur supprimé")
+			removed, err := handler.DeleteUser(&contacts)
+			if err != nil {
+				fmt.Println("Erreur lors de la suppression de l'utilisateur :", err)
+			} else {
+				fmt.Println("Utilisateur supprimé :", removed.Name, removed.Surname)
+			}
 		case "4":
 			fmt.Println("Utilisateur modifié")
 		case "5":
