@@ -44,7 +44,9 @@ func main() {
 		case "3":
 			fmt.Println("Utilisateur supprimé")
 		case "4":
-			fmt.Println("Utilisateur modifié")
+			if err := handler.ModifyUser(&contacts); err != nil {
+				fmt.Printf("Erreur lors de la modification : %v\n", err)
+			}
 		case "5":
 			fmt.Println("Fermeture de l'application...")
 			return
