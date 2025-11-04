@@ -6,7 +6,7 @@ import (
 	"github.com/marieesss/go-crm-terminal/internal/domain"
 )
 
-func ListUsers(contacts *[]domain.Contact) {
+func ListUsers(contacts *map[int]*domain.Contact) {
 	fmt.Println("\n=== Liste des contacts ===")
 	if len(*contacts) == 0 {
 		fmt.Println("Aucun contact enregistré.")
@@ -14,7 +14,7 @@ func ListUsers(contacts *[]domain.Contact) {
 	}
 
 	for i, contact := range *contacts {
-		fmt.Printf("\nContact %d:\n", i+1)
+		fmt.Printf("\nContact %d:\n", i)
 		fmt.Printf("Nom: %s\n", contact.Name)
 		fmt.Printf("Prénom: %s\n", contact.Surname)
 		fmt.Printf("Téléphone: %s\n", contact.Phone)

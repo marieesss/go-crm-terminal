@@ -13,11 +13,11 @@ import (
 func main() {
 	reader := bufio.NewReader(os.Stdin)
 
-	var contacts []domain.Contact
-
-	contacts = append(contacts, domain.Contact{Name: "Alice", Surname: "Smith", Phone: "123-456-7890", Email: "alice@example.com"})
-	contacts = append(contacts, domain.Contact{Name: "Bob", Surname: "Johnson", Phone: "987-654-3210", Email: "bob@example.com"})
-	contacts = append(contacts, domain.Contact{Name: "Charlie", Surname: "Brown", Phone: "555-555-5555", Email: "charlie@example.com"})
+	contacts := map[int]*domain.Contact{
+		1: {Name: "Alice", Surname: "Smith", Phone: "123", Email: "alice@example.com"},
+		2: {Name: "Bob", Surname: "Jones", Phone: "456", Email: "bob@example.com"},
+		3: {Name: "Charlie", Surname: "Brown", Phone: "789", Email: "charlie@example.com"},
+	}
 
 	for {
 		fmt.Println("=== MENU ===")

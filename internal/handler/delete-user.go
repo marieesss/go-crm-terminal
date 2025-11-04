@@ -10,7 +10,7 @@ import (
 	"github.com/marieesss/go-crm-terminal/internal/domain"
 )
 
-func DeleteUser(contacts *[]domain.Contact) (domain.Contact, error) {
+func DeleteUser(contacts *map[int]*domain.Contact) (domain.Contact, error) {
 	reader := bufio.NewReader(os.Stdin)
 
 	ListUsers(contacts)
@@ -22,13 +22,12 @@ func DeleteUser(contacts *[]domain.Contact) (domain.Contact, error) {
 	if err != nil {
 		return domain.Contact{}, fmt.Errorf("index invalide")
 	}
-
-	if index < 0 || index >= len(*contacts) {
-		return domain.Contact{}, fmt.Errorf("ID indisponible")
+	valPtr, exists := (*contacts)[index]
+	if !exists {
+		return domain.Contact{}, fmt.Errorf("aucun contact trouvé avec cet index")
 	}
 
-	removed := (*contacts)[index]
-
-	*contacts = append((*contacts)[:index], (*contacts)[index+1:]...)
+	removed := *valPtr
+	delete(*contacts, index)
 	return removed, nil
 }

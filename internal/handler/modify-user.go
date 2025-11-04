@@ -36,7 +36,7 @@ func validateEmail(email string) bool {
 	return strings.Contains(email, "@")
 }
 
-func ModifyUser(contacts *[]domain.Contact) error {
+func ModifyUser(contacts *map[int]*domain.Contact) error {
 	if len(*contacts) == 0 {
 		return fmt.Errorf("aucun contact à modifier")
 	}
