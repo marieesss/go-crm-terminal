@@ -6,14 +6,15 @@ import (
 	"github.com/marieesss/go-crm-terminal/internal/domain"
 )
 
-func ListUsers(contacts *map[int]*domain.Contact) {
+func ListUsers(memoryStore domain.Storer) {
 	fmt.Println("\n=== Liste des contacts ===")
-	if len(*contacts) == 0 {
+	contacts := memoryStore.GetAll()
+	if len(contacts) == 0 {
 		fmt.Println("Aucun contact enregistré.")
 		return
 	}
 
-	for i, contact := range *contacts {
+	for i, contact := range contacts {
 		fmt.Printf("\nContact %d:\n", i)
 		fmt.Printf("Nom: %s\n", contact.Name)
 		fmt.Printf("Prénom: %s\n", contact.Surname)

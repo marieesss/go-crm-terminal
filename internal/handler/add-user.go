@@ -9,7 +9,7 @@ import (
 	"github.com/marieesss/go-crm-terminal/internal/domain"
 )
 
-func AddUser(contacts *map[int]*domain.Contact) (*domain.Contact, error) {
+func AddUser(memoryStore domain.Storer) (*domain.Contact, error) {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print(" 👀 Nom de l'utilisateur : ")
@@ -47,8 +47,7 @@ func AddUser(contacts *map[int]*domain.Contact) (*domain.Contact, error) {
 		Email:   email,
 	}
 
-	newID := len(*contacts) + 1
-	(*contacts)[newID] = contact
+	memoryStore.Add(contact)
 
 	return contact, nil
 }

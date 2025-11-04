@@ -6,18 +6,13 @@ import (
 	"os"
 	"strings"
 
-	"github.com/marieesss/go-crm-terminal/internal/domain"
 	"github.com/marieesss/go-crm-terminal/internal/handler"
+	"github.com/marieesss/go-crm-terminal/internal/storage"
 )
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
-
-	contacts := map[int]*domain.Contact{
-		1: {Name: "Alice", Surname: "Smith", Phone: "123", Email: "alice@example.com"},
-		2: {Name: "Bob", Surname: "Jones", Phone: "456", Email: "bob@example.com"},
-		3: {Name: "Charlie", Surname: "Brown", Phone: "789", Email: "charlie@example.com"},
-	}
+	memoryStore := storage.NewMemoryStore()
 
 	for {
 		fmt.Println("=== MENU ===")
@@ -33,25 +28,25 @@ func main() {
 
 		switch input {
 		case "1":
-			contact, err := handler.AddUser(&contacts)
+			contact, err := handler.AddUser(memoryStore)
 			if err != nil {
 				fmt.Println("Erreur lors de l'ajout de l'utilisateur :", err)
 			} else {
 				fmt.Println("😍 Utilisateur ajouté :", contact)
 			}
 		case "2":
-			handler.ListUsers(&contacts)
-		case "3":
-			removed, err := handler.DeleteUser(&contacts)
-			if err != nil {
-				fmt.Println("Erreur lors de la suppression de l'utilisateur :", err)
-			} else {
-				fmt.Println("Utilisateur supprimé :", removed.Name, removed.Surname)
-			}
-		case "4":
-			if err := handler.ModifyUser(&contacts); err != nil {
-				fmt.Printf("Erreur lors de la modification : %v\n", err)
-			}
+			handler.ListUsers(memoryStore)
+		// case "3":
+		// 	removed, err := handler.DeleteUser(memoryStore)
+		// 	if err != nil {
+		// 		fmt.Println("Erreur lors de la suppression de l'utilisateur :", err)
+		// 	} else {
+		// 		fmt.Println("Utilisateur supprimé :", removed.Name, removed.Surname)
+		// 	}
+		// case "4":
+		// 	if err := handler.ModifyUser(memoryStore); err != nil {
+		// 		fmt.Printf("Erreur lors de la modification : %v\n", err)
+		// 	}
 		case "5":
 			fmt.Println("Fermeture de l'application...")
 			return

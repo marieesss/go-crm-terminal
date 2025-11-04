@@ -13,7 +13,7 @@ import (
 func DeleteUser(contacts *map[int]*domain.Contact) (domain.Contact, error) {
 	reader := bufio.NewReader(os.Stdin)
 
-	ListUsers(contacts)
+	// ListUsers(contacts)
 
 	fmt.Print("Tapez l'id de l'utilisateur à supprimer : ")
 	idStr, _ := reader.ReadString('\n')
