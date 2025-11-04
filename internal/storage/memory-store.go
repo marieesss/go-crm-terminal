@@ -41,3 +41,12 @@ func (m *MemoryStore) Delete(id int) error {
 	delete(m.data, id)
 	return nil
 }
+
+func (m *MemoryStore) Update(id int, c *domain.Contact) error {
+	if _, ok := m.data[id]; !ok {
+		return fmt.Errorf("aucun contact trouvé avec l'id %d", id)
+	}
+	// on remplace l'entrée (simple et clair)
+	m.data[id] = c
+	return nil
+}

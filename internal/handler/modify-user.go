@@ -3,7 +3,6 @@ package handler
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 	"unicode"
@@ -36,78 +35,79 @@ func validateEmail(email string) bool {
 	return strings.Contains(email, "@")
 }
 
-func ModifyUser(contacts *map[int]*domain.Contact) error {
-	if len(*contacts) == 0 {
-		return fmt.Errorf("aucun contact à modifier")
+// Retourne le contact mis à jour + l'id choisi
+func UpdateUser(memoryStore domain.Storer, reader *bufio.Reader) (*domain.Contact, int, error) {
+	contacts := memoryStore.GetAll()
+	if len(contacts) == 0 {
+		return nil, 0, fmt.Errorf("aucun contact à modifier")
 	}
 
-	reader := bufio.NewReader(os.Stdin)
-
-	// Afficher la liste des contacts
+	// Afficher la liste
 	fmt.Println("\n=== Liste des contacts ===")
-	for i, contact := range *contacts {
-		fmt.Printf("%d. %s %s\n", i+1, contact.Name, contact.Surname)
+	for id, c := range contacts {
+		fmt.Printf("%d) %s %s - %s - %s\n", id, c.Name, c.Surname, c.Phone, c.Email)
 	}
 
-	// Demander l'index du contact à modifier
-	fmt.Print("\nEntrez le numéro du contact à modifier (1-" + strconv.Itoa(len(*contacts)) + ") : ")
-	indexStr, _ := reader.ReadString('\n')
-	indexStr = strings.TrimSpace(indexStr)
-
-	index, err := strconv.Atoi(indexStr)
+	// Demander l'ID du contact
+	fmt.Print("\nEntrez l'ID du contact à modifier : ")
+	idStr, _ := reader.ReadString('\n')
+	idStr = strings.TrimSpace(idStr)
+	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		return fmt.Errorf("numéro invalide")
+		return nil, 0, fmt.Errorf("id invalide")
+	}
+	current, ok := contacts[id]
+	if !ok || current == nil {
+		return nil, 0, fmt.Errorf("aucun contact trouvé avec l'id %d", id)
 	}
 
-	// Vérifier si l'index est valide
-	if index < 1 || index > len(*contacts) {
-		return fmt.Errorf("numéro de contact invalide")
-	}
-
-	// Ajuster l'index car les tableaux commencent à 0
-	index--
-
-	// Demander les nouvelles informations
-	fmt.Print("Nouveau nom (ou appuyez sur Entrée pour garder " + (*contacts)[index].Name + ") : ")
+	fmt.Printf(" 👀 Nom [%s] : ", current.Name)
 	name, _ := reader.ReadString('\n')
 	name = strings.TrimSpace(name)
-	if name != "" {
-		if containsNumber(name) {
-			return fmt.Errorf("le nom ne doit pas contenir de chiffres")
-		}
-		(*contacts)[index].Name = name
+	if name == "" {
+		name = current.Name
+	} else if containsNumber(name) {
+		return nil, 0, fmt.Errorf("le nom ne doit pas contenir de chiffres")
 	}
 
-	fmt.Print("Nouveau prénom (ou appuyez sur Entrée pour garder " + (*contacts)[index].Surname + ") : ")
+	fmt.Printf(" 👀 Prénom [%s] : ", current.Surname)
 	surname, _ := reader.ReadString('\n')
 	surname = strings.TrimSpace(surname)
-	if surname != "" {
-		if containsNumber(surname) {
-			return fmt.Errorf("le prénom ne doit pas contenir de chiffres")
-		}
-		(*contacts)[index].Surname = surname
+	if surname == "" {
+		surname = current.Surname
+	} else if containsNumber(surname) {
+		return nil, 0, fmt.Errorf("le prénom ne doit pas contenir de chiffres")
 	}
 
-	fmt.Print("Nouveau numéro de téléphone (ou appuyez sur Entrée pour garder " + (*contacts)[index].Phone + ") : ")
+	fmt.Printf(" 👀 Téléphone [%s] : ", current.Phone)
 	phone, _ := reader.ReadString('\n')
 	phone = strings.TrimSpace(phone)
-	if phone != "" {
-		if !validatePhoneNumber(phone) {
-			return fmt.Errorf("le numéro de téléphone doit contenir uniquement des chiffres et avoir maximum 10 caractères")
-		}
-		(*contacts)[index].Phone = phone
+	if phone == "" {
+		phone = current.Phone
+	} else if !validatePhoneNumber(phone) {
+		return nil, 0, fmt.Errorf("le numéro de téléphone doit contenir uniquement des chiffres et avoir maximum 10 caractères")
 	}
 
-	fmt.Print("Nouvel email (ou appuyez sur Entrée pour garder " + (*contacts)[index].Email + ") : ")
+	fmt.Printf(" 👀 Email [%s] : ", current.Email)
 	email, _ := reader.ReadString('\n')
 	email = strings.TrimSpace(email)
-	if email != "" {
-		if !validateEmail(email) {
-			return fmt.Errorf("l'email doit contenir un @")
-		}
-		(*contacts)[index].Email = email
+	if email == "" {
+		email = current.Email
+	} else if !validateEmail(email) {
+		return nil, 0, fmt.Errorf("l'email doit contenir un @")
 	}
 
-	fmt.Println("Contact modifié avec succès !")
-	return nil
+	updated := &domain.Contact{
+		Name:    name,
+		Surname: surname,
+		Phone:   phone,
+		Email:   email,
+	}
+
+	if err := memoryStore.Update(id, updated); err != nil {
+		return nil, 0, err
+	}
+
+	fmt.Println("✅ Contact modifié avec succès !")
+	return updated, id, nil
 }

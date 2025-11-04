@@ -43,10 +43,13 @@ func main() {
 			} else {
 				fmt.Println("Utilisateur supprimé :", removed.Name, removed.Surname)
 			}
-		// case "4":
-		// 	if err := handler.ModifyUser(memoryStore); err != nil {
-		// 		fmt.Printf("Erreur lors de la modification : %v\n", err)
-		// 	}
+		case "4":
+			updated, id, err := handler.UpdateUser(memoryStore, reader)
+			if err != nil {
+				fmt.Println("Erreur:", err)
+				break
+			}
+			fmt.Printf("🎉 Contact %d mis à jour: %s %s\n", id, updated.Name, updated.Surname)
 		case "5":
 			fmt.Println("Fermeture de l'application...")
 			return
