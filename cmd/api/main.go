@@ -28,7 +28,7 @@ func main() {
 
 		switch input {
 		case "1":
-			contact, err := handler.AddUser(memoryStore)
+			contact, err := handler.AddUser(memoryStore, reader)
 			if err != nil {
 				fmt.Println("Erreur lors de l'ajout de l'utilisateur :", err)
 			} else {
@@ -36,13 +36,13 @@ func main() {
 			}
 		case "2":
 			handler.ListUsers(memoryStore)
-		// case "3":
-		// 	removed, err := handler.DeleteUser(memoryStore)
-		// 	if err != nil {
-		// 		fmt.Println("Erreur lors de la suppression de l'utilisateur :", err)
-		// 	} else {
-		// 		fmt.Println("Utilisateur supprimé :", removed.Name, removed.Surname)
-		// 	}
+		case "3":
+			removed, err := handler.DeleteUser(memoryStore, reader)
+			if err != nil {
+				fmt.Println("Erreur lors de la suppression de l'utilisateur :", err)
+			} else {
+				fmt.Println("Utilisateur supprimé :", removed.Name, removed.Surname)
+			}
 		// case "4":
 		// 	if err := handler.ModifyUser(memoryStore); err != nil {
 		// 		fmt.Printf("Erreur lors de la modification : %v\n", err)

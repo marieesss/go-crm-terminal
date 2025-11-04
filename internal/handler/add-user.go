@@ -3,14 +3,12 @@ package handler
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strings"
 
 	"github.com/marieesss/go-crm-terminal/internal/domain"
 )
 
-func AddUser(memoryStore domain.Storer) (*domain.Contact, error) {
-	reader := bufio.NewReader(os.Stdin)
+func AddUser(memoryStore domain.Storer, reader *bufio.Reader) (*domain.Contact, error) {
 
 	fmt.Print(" 👀 Nom de l'utilisateur : ")
 	name, _ := reader.ReadString('\n')

@@ -14,8 +14,8 @@ func ListUsers(memoryStore domain.Storer) {
 		return
 	}
 
-	for i, contact := range contacts {
-		fmt.Printf("\nContact %d:\n", i)
+	for id, contact := range contacts {
+		fmt.Printf("\nContact %d:\n", id)
 		fmt.Printf("Nom: %s\n", contact.Name)
 		fmt.Printf("Prénom: %s\n", contact.Surname)
 		fmt.Printf("Téléphone: %s\n", contact.Phone)

@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"fmt"
+
 	"github.com/marieesss/go-crm-terminal/internal/domain"
 )
 
@@ -28,11 +30,14 @@ func (m *MemoryStore) Add(c *domain.Contact) error {
 	return nil
 }
 
-func (m *MemoryStore) GetAll() []*domain.Contact {
-	list := []*domain.Contact{}
-	for _, c := range m.data {
-		list = append(list, c)
-	}
-	return list
+func (m *MemoryStore) GetAll() map[int]*domain.Contact {
+	return m.data
+}
 
+func (m *MemoryStore) Delete(id int) error {
+	if _, ok := m.data[id]; !ok {
+		return fmt.Errorf("aucun contact trouvé avec l'id %d", id)
+	}
+	delete(m.data, id)
+	return nil
 }

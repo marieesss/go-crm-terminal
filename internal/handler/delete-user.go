@@ -3,17 +3,17 @@ package handler
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 
 	"github.com/marieesss/go-crm-terminal/internal/domain"
 )
 
-func DeleteUser(contacts *map[int]*domain.Contact) (domain.Contact, error) {
-	reader := bufio.NewReader(os.Stdin)
+func DeleteUser(memoryStore domain.Storer, reader *bufio.Reader) (domain.Contact, error) {
 
-	// ListUsers(contacts)
+	ListUsers(memoryStore)
+
+	var contacts = memoryStore.GetAll()
 
 	fmt.Print("Tapez l'id de l'utilisateur à supprimer : ")
 	idStr, _ := reader.ReadString('\n')
@@ -22,12 +22,13 @@ func DeleteUser(contacts *map[int]*domain.Contact) (domain.Contact, error) {
 	if err != nil {
 		return domain.Contact{}, fmt.Errorf("index invalide")
 	}
-	valPtr, exists := (*contacts)[index]
-	if !exists {
-		return domain.Contact{}, fmt.Errorf("aucun contact trouvé avec cet index")
-	}
 
-	removed := *valPtr
-	delete(*contacts, index)
-	return removed, nil
+	removed := contacts[index]
+	if removed == nil {
+		return domain.Contact{}, fmt.Errorf("aucun contact trouvé avec l'id %d", index)
+	}
+	if err := memoryStore.Delete(index); err != nil {
+		return domain.Contact{}, err
+	}
+	return *removed, nil
 }
