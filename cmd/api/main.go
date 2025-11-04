@@ -21,11 +21,11 @@ func main() {
 
 	for {
 		fmt.Println("=== MENU ===")
-		fmt.Println("1. Ajouter un contact")
-		fmt.Println("2. Lister les contacts")
-		fmt.Println("3. Supprimer un contact")
-		fmt.Println("4. Modifier un contact")
-		fmt.Println("5. Quitter l'appli")
+		fmt.Println("1.⭐ Ajouter un contact")
+		fmt.Println("2.⭐ Lister les contacts")
+		fmt.Println("3.⭐ Supprimer un contact")
+		fmt.Println("4.⭐ Modifier un contact")
+		fmt.Println("5.⭐ Quitter l'appli")
 		fmt.Print("Choisissez une option : ")
 
 		input, _ := reader.ReadString('\n')
@@ -37,7 +37,7 @@ func main() {
 			if err != nil {
 				fmt.Println("Erreur lors de l'ajout de l'utilisateur :", err)
 			} else {
-				fmt.Println("Utilisateur ajouté :", contact)
+				fmt.Println("😍 Utilisateur ajouté :", contact)
 			}
 		case "2":
 			handler.ListUsers(&contacts)
