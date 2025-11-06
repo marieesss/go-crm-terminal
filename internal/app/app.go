@@ -27,10 +27,6 @@ func Run(store storage.Storer) {
 		choice := readUserChoice(reader)
 
 		switch choice {
-		case 1:
-			handleAddContact(reader, store)
-		case 2:
-			handleListContacts(store)
 		case 3:
 			handleUpdateContact(reader, store)
 		case 4:
@@ -58,24 +54,6 @@ func HandleAddContact(name string, email string) {
 	}
 
 	fmt.Printf(" Contact '%s' added with ID %d.\n", contact.Name, contact.ID)
-}
-
-func handleListContacts(store storage.Storer) {
-	contacts, err := store.GetAll()
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		return
-	}
-
-	if len(contacts) == 0 {
-		fmt.Println(" No contacts to display.")
-		return
-	}
-
-	fmt.Println("\n--- Contact List ---")
-	for _, contact := range contacts {
-		fmt.Printf("ID: %d, Name: %s, Email: %s\n", contact.ID, contact.Name, contact.Email)
-	}
 }
 
 func handleUpdateContact(reader *bufio.Reader, store storage.Storer) {
