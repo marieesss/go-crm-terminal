@@ -1,40 +1,21 @@
+# TP 2: Système de Notifications et Logging
 
-# Go CRM terminal
+## Objectif du Projet
+Construire une application en ligne de commande qui simule l'envoi de notifications via différents canaux et qui archive un historique de tous les envois réussis.
 
-Application simple en Go sur le terminal permettant de gérer des contacts
+## Fonctionnalités Attendues
+1. Un Système de Notification Flexible
 
-On peut :
+* Votre programme doit pouvoir gérer plusieurs types de notifications : Email, SMS, et Push.
+* Le notificateur SMS doit inclure une logique de validation. Si un numéro de téléphone est considéré comme invalide (par exemple, il ne commence pas par "06"), l'envoi doit échouer et retourner une erreur explicite.
+* Le programme principal doit pouvoir traiter une liste contenant différents types de notificateurs les uns à la suite des autres.
+* Les erreurs d'envoi doivent être capturées et affichées dans la console sans stopper le reste du programme.
 
-- Ajouter un utilisateur
-- Lister les utilisateurs
-- Supprimer un utilisateur 
-- Modifier un utilisateur
+2. Un Système d'Archivage (Storer)
+   
+* Chaque notification envoyée avec succès doit être enregistrée.
+* L'enregistrement doit contenir le message envoyé ainsi que la date et l'heure de l'envoi (timestamp).
+* Les enregistrements seront conservés en mémoire.
+* À la fin de l'exécution, le programme devra afficher la liste complète de toutes les notifications qui ont été archivées.
 
-## Authors
-
-- Matthéo Naegellen [@MatNgl](https://github.com/MatNgl)
-- Marie Espinosa [@marieesss](https://github.com/marieesss)
-
-
-
-
-## Run Locally
-
-Clone the project
-
-```bash
-  git clone https://github.com/marieesss/go-crm-terminal
-```
-
-Go to the project directory
-
-```bash
-  cd go-crm-terminal
-```
-
-Start the server
-
-```bash
-  go run .\cmd\api\main.go
-```
-
+* **Concepts Clés à Utiliser** : interfaces, structs, slices, gestion d'erreurs, le package time et tout ce qu'on a vu en cours ensemble.
