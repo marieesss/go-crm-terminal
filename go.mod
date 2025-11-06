@@ -1,3 +1,3 @@
-module github.com/axellelanca/2526_master2/cours2/refactor_crm_interface
+module github.com/marie-mattheo/crm-project
 
 go 1.25

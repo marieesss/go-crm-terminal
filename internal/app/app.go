@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/axellelanca/2526_master2/cours2/refactor_crm_interface/internal/storage"
+	"github.com/marie-mattheo/crm-project/internal/storage"
 )
 
 func Run(store storage.Storer) {

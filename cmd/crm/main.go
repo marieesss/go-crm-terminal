@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/axellelanca/2526_master2/cours2/refactor_crm_interface/internal/app"
-	"github.com/axellelanca/2526_master2/cours2/refactor_crm_interface/internal/storage"
+	"github.com/marie-mattheo/crm-project/internal/app"
+	"github.com/marie-mattheo/crm-project/internal/storage"
 )
 
 // La fonction main orchestre l'application. Elle dépend de l'interface Storer,
