@@ -48,41 +48,7 @@ func Run(store storage.Storer) {
 // et appellent la couche de stockage (le store) pour effectuer les opérations.
 // Elles sont découplées du stockage : elles fonctionnent avec N'IMPORTE quel Storer.
 
-func handleAddContact(reader *bufio.Reader, store storage.Storer) {
-	var (
-		name  string
-		email string
-		err   error
-	)
-
-	// Boucle pour le nom (obligatoire)
-	for {
-		fmt.Print("Enter contact name: ")
-		name, err = readLine(reader)
-		if err != nil {
-			// Erreur système lors de la lecture (EOF, etc.)
-			fmt.Printf("Read error: %v. Please try again.\n", err)
-			continue
-		}
-		if name != "" {
-			break // L'entrée est valide (non vide)
-		}
-		fmt.Println("Name cannot be empty. Please enter a value.")
-	}
-
-	// Boucle pour l'email (obligatoire)
-	for {
-		fmt.Print("Enter contact email: ")
-		email, err = readLine(reader)
-		if err != nil {
-			fmt.Printf("Read error: %v. Please try again.\n", err)
-			continue
-		}
-		if email != "" {
-			break // L'entrée est valide (non vide)
-		}
-		fmt.Println("Email cannot be empty. Please enter a value.")
-	}
+func HandleAddContact(name string, email string) {
 	// Le reste de la logique d'ajout
 	contact := &storage.Contact{Name: name, Email: email}
 	err = store.Add(contact)
