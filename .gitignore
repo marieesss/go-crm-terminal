@@ -1,0 +1,32 @@
+# Binaires compilés
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Fichiers de test
+*.test
+*.out
+
+# Base de données
+*.db
+*.sqlite
+*.sqlite3
+
+# Fichiers de données
+contacts.json
+
+# Dossiers de dépendances
+vendor/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
