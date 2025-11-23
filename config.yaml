@@ -1,0 +1,10 @@
+storage:
+  type: "gorm"  # Options: "memory", "json", "gorm"
+  
+  # Configuration pour JSON
+  json:
+    filepath: "contacts.json"
+  
+  # Configuration pour GORM/SQLite
+  gorm:
+    dbpath: "contacts.db"
