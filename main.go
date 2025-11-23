@@ -8,9 +8,10 @@ import (
 )
 
 func main() {
-	store, err := storage.NewJSONStore("contacts.json")
+	store, err := storage.NewGORMStore("contacts.db")
 	if err != nil {
 		fmt.Printf("Erreur storage: %v\n", err)
+		return
 	}
 	cmd.Execute(store)
 }
